@@ -1,0 +1,19 @@
+# 忽略系統檔案
+.DS_Store
+*.env
+*.env.local
+
+# 忽略 Foundry (contracts) 的檔案
+# 注意：我們加上了 'contracts/' 前綴
+contracts/lib/
+contracts/cache/
+contracts/artifacts/
+contracts/broadcast/
+contracts/deployments/
+
+# 忽略 React (frontend) 的檔案
+# 注意：我們加上了 'frontend/' 前綴
+frontend/node_modules/
+frontend/dist/
+frontend/.cache/
+frontend/.vite/
