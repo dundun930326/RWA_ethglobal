@@ -2,9 +2,9 @@
 pragma solidity ^0.8.20;
 
 // 匯入 OpenZeppelin 的合約
-import "openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
-import "openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "openzeppelin-contracts/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title RWA (Real World Asset) Token
@@ -40,23 +40,16 @@ contract RWA is ERC721, ERC721URIStorage, Ownable {
         onlyOwner // 確保只有 Owner 才能執行
         returns (uint256)
     {
-        // --- 這裡是修改後的計數器邏輯 ---
-        
-        // 1. 讓計數器 +1 (第一次呼叫時，會從 0 變成 1)
+        return _mintTo(to, uri);
+    }
+
+    /// @dev Internal reusable mint implementation
+    function _mintTo(address to, string memory uri) internal returns (uint256) {
+        // increment counter first so token ids start at 1
         _tokenIdCounter++;
-        
-        // 2. 取得計數器當前的值作為新的 Token ID
         uint256 tokenId = _tokenIdCounter;
-        
-        // --- 修改結束 ---
-        
-        // 3. 執行 ERC721 的內部鑄造函數
         _mint(to, tokenId);
-        
-        // 4. 設定這個新 Token ID 對應的 metadata URI
         _setTokenURI(tokenId, uri);
-        
-        // 5. 回傳這個 neuen Token ID
         return tokenId;
     }
 
